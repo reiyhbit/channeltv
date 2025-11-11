@@ -4,9 +4,9 @@
 
 HTML IPTV Player with EPG viewer for M3U8 playlist
 
-https://dbghelp.github.io/player.html?file=<link to playlist.m3u8\>
+https://reiyhbit.github.io/player.html?file=<link to playlist.m3u8\>
 
-https://dbghelp.github.io/player.html?file=https://dbghelp.github.io/playlist.m3u8
+https://reiyhbit.github.io/player.html?file=https://dbghelp.github.io/playlist.m3u8
 
 ## Features
 
@@ -57,9 +57,9 @@ https://media.axprod.net/TestVectors/Cmaf/protected_1080p_h264_cbcs/manifest.mpd
 
 https://github.com/dbghelp/html-epg-viewer
 
-https://dbghelp.github.io/epg.html?file=<link to epg.xml\>
+https://reiyhbit.github.io/epg.html?file=<link to epg.xml\>
 
-[https://dbghelp.github.io/epg.html?file=https://raw.githubusercontent.com/dbghelp/mewatch-EPG/refs/heads/main/mewatch.xml](https://dbghelp.github.io/epg.html?file=https://raw.githubusercontent.com/dbghelp/mewatch-EPG/refs/heads/main/mewatch.xml)
+[https://reiyhbit.github.io/epg.html?file=https://raw.githubusercontent.com/dbghelp/mewatch-EPG/refs/heads/main/mewatch.xml](https://reiyhbit.github.io/epg.html?file=https://raw.githubusercontent.com/dbghelp/mewatch-EPG/refs/heads/main/mewatch.xml)
 
 ## Create your own IPTV web app in 5 minutes
 
