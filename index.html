@@ -5,7 +5,7 @@
     <meta content="width=device-width,initial-scale=1" name="viewport">
     <meta content="no-referrer" name="referrer">
     <link href="data:image/x-icon;," rel="icon">
-    <title>IPTV Mobile</title>
+    <title>IPTV Mobile - PH Channels</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.11.2/controls.min.css" rel="stylesheet">
     <style>
         * {
@@ -135,6 +135,23 @@
         
         #epg-btn:active {
             background: #e55a2b;
+        }
+
+        /* Add Channel Button */
+        #add-channel-btn {
+            padding: 10px;
+            margin: 8px 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        #add-channel-btn:active {
+            background: #218838;
         }
         
         /* Quick channels - LAHAT NG CHANNELS NA! */
@@ -278,6 +295,70 @@
         .channel-item.active {
             background: #4fa3c4;
         }
+
+        /* Add Channel Modal */
+        #add-channel-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1002;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #save-channel {
+            background: #28a745;
+            color: white;
+        }
+
+        #cancel-add {
+            background: #6c757d;
+            color: white;
+        }
         
         /* Toast notifications */
         .toast {
@@ -348,6 +429,9 @@
             
             <!-- EPG Button -->
             <button id="epg-btn">📺 PROGRAM GUIDE</button>
+
+            <!-- Add Channel Button -->
+            <button id="add-channel-btn">➕ ADD PH CHANNEL</button>
             
             <!-- Quick Channels List - LAHAT NG CHANNELS NA! -->
             <div id="quick-channels">
@@ -368,6 +452,21 @@
         <input type="text" id="channel-search" placeholder="Search channels...">
         <div id="channels-list"></div>
     </div>
+
+    <!-- Add Channel Modal -->
+    <div id="add-channel-modal">
+        <div class="modal-content">
+            <h3>Add Philippine Channel</h3>
+            <input type="text" id="channel-name" class="modal-input" placeholder="Channel Name (e.g., GMA 7)">
+            <input type="text" id="channel-url" class="modal-input" placeholder="M3U8 URL">
+            <input type="text" id="channel-logo" class="modal-input" placeholder="Logo URL (optional)">
+            
+            <div class="modal-buttons">
+                <button id="save-channel" class="modal-btn">Save Channel</button>
+                <button id="cancel-add" class="modal-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.11/shaka-player.compiled.js"></script>
     <script src="https://dbghelp.github.io/M3U8Interpreter.js"></script>
@@ -375,7 +474,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     
     <script>
-        // Mobile IPTV App with COMPLETE CHANNELS
+        // Mobile IPTV App with PHILIPPINE CHANNELS
         class MobileIPTV {
             constructor() {
                 this.channels = [];
@@ -384,6 +483,46 @@
                 this.xmlepg = null;
                 this.isFullscreen = false;
                 
+                // Pre-defined Philippine Channels
+                this.phChannels = [
+                    {
+                        channelName: "GMA 7",
+                        manifestUrl: "https://example.com/gma7.m3u8", // Replace with actual URL
+                        tvgLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/GMA_Network_%282020%29.svg/1200px-GMA_Network_%282020%29.svg.png",
+                        tvgId: "gma7"
+                    },
+                    {
+                        channelName: "ABS-CBN",
+                        manifestUrl: "https://example.com/abscbn.m3u8", // Replace with actual URL
+                        tvgLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/ABS-CBN_logo_2010.svg/1200px-ABS-CBN_logo_2010.svg.png",
+                        tvgId: "abscbn"
+                    },
+                    {
+                        channelName: "TV5",
+                        manifestUrl: "https://example.com/tv5.m3u8", // Replace with actual URL
+                        tvgLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/TV5_Network_Inc._logo.svg/1200px-TV5_Network_Inc._logo.svg.png",
+                        tvgId: "tv5"
+                    },
+                    {
+                        channelName: "CNN Philippines",
+                        manifestUrl: "https://example.com/cnnph.m3u8", // Replace with actual URL
+                        tvgLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/CNN_Philippines.svg/1200px-CNN_Philippines.svg.png",
+                        tvgId: "cnnph"
+                    },
+                    {
+                        channelName: "TAP Sports",
+                        manifestUrl: "https://example.com/tapsports.m3u8", // Replace with actual URL
+                        tvgLogo: "https://www.tapdigitalservices.com/wp-content/uploads/2021/03/TAP-Sports-Logo.png",
+                        tvgId: "tapsports"
+                    },
+                    {
+                        channelName: "Knowledge Channel",
+                        manifestUrl: "https://example.com/knowledgechannel.m3u8", // Replace with actual URL
+                        tvgLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Knowledge_Channel_logo.svg/1200px-Knowledge_Channel_logo.svg.png",
+                        tvgId: "knowledgechannel"
+                    }
+                ];
+                
                 this.initializeApp();
             }
             
@@ -391,7 +530,7 @@
                 // Initialize Shaka Player
                 this.initializePlayer();
                 
-                // Load default playlist
+                // Load default playlist + PH channels
                 this.loadDefaultPlaylist();
                 
                 // Setup event listeners
@@ -436,19 +575,37 @@
                         this.parsePlaylist(text);
                     } else {
                         this.showToast('Failed to load playlist');
+                        // Load PH channels only if main playlist fails
+                        this.loadPHChannelsOnly();
                     }
                 } catch (error) {
                     console.error('Error loading playlist:', error);
                     this.showToast('Error loading playlist');
+                    // Load PH channels only if main playlist fails
+                    this.loadPHChannelsOnly();
                 } finally {
                     document.getElementById('loading').style.display = 'none';
                 }
             }
             
+            loadPHChannelsOnly() {
+                this.channels = [...this.phChannels];
+                this.updateChannelList();
+                this.updateQuickChannels();
+                
+                if (this.channels.length > 0) {
+                    this.playChannel(0);
+                }
+                this.showToast(`Loaded ${this.channels.length} Philippine channels`);
+            }
+            
             parsePlaylist(content) {
                 const m3u8Interpreter = new M3U8Interpreter(content);
                 m3u8Interpreter.parse();
-                this.channels = m3u8Interpreter.getChannels();
+                const originalChannels = m3u8Interpreter.getChannels();
+                
+                // Combine original channels with PH channels
+                this.channels = [...originalChannels, ...this.phChannels];
                 
                 // Initialize XML EPG if available
                 const urls = m3u8Interpreter.getUrlTvg();
@@ -464,6 +621,22 @@
                 if (this.channels.length > 0) {
                     this.playChannel(0);
                 }
+                
+                this.showToast(`Loaded ${originalChannels.length} international + ${this.phChannels.length} PH channels`);
+            }
+            
+            addCustomChannel(name, url, logo) {
+                const newChannel = {
+                    channelName: name,
+                    manifestUrl: url,
+                    tvgLogo: logo || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFkYWZiIi8+Cjx0ZXh0IHg9IjEyIiB5PSIxMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+UEg8L3RleHQ+Cjwvc3ZnPgo=',
+                    tvgId: name.toLowerCase().replace(/ /g, '')
+                };
+                
+                this.channels.push(newChannel);
+                this.updateChannelList();
+                this.updateQuickChannels();
+                this.showToast(`Added: ${name}`);
             }
             
             updateChannelList() {
@@ -520,9 +693,6 @@
                     
                     quickChannels.appendChild(quickChannel);
                 });
-
-                // Show channel count
-                this.showToast(`Loaded ${this.channels.length} channels`);
             }
             
             playChannel(index) {
@@ -562,7 +732,7 @@
                     
                 } catch (error) {
                     console.error('Error playing channel:', error);
-                    this.showToast('Error playing channel');
+                    this.showToast('Error playing channel - URL might be invalid');
                     this.updateChannelStatus('Error');
                 }
             }
@@ -614,6 +784,11 @@
                 // EPG
                 document.getElementById('epg-btn').addEventListener('click', () => this.showEPG());
                 
+                // Add Channel
+                document.getElementById('add-channel-btn').addEventListener('click', () => this.showAddChannelModal());
+                document.getElementById('save-channel').addEventListener('click', () => this.saveCustomChannel());
+                document.getElementById('cancel-add').addEventListener('click', () => this.hideAddChannelModal());
+                
                 // Search
                 document.getElementById('channel-search').addEventListener('input', (e) => {
                     this.filterChannels(e.target.value);
@@ -629,6 +804,38 @@
                 document.getElementById('channel-overlay').style.display = 'none';
                 document.getElementById('channel-search').value = '';
                 this.filterChannels(''); // Reset filter
+            }
+            
+            showAddChannelModal() {
+                document.getElementById('add-channel-modal').style.display = 'flex';
+                document.getElementById('channel-name').focus();
+            }
+            
+            hideAddChannelModal() {
+                document.getElementById('add-channel-modal').style.display = 'none';
+                // Clear inputs
+                document.getElementById('channel-name').value = '';
+                document.getElementById('channel-url').value = '';
+                document.getElementById('channel-logo').value = '';
+            }
+            
+            saveCustomChannel() {
+                const name = document.getElementById('channel-name').value.trim();
+                const url = document.getElementById('channel-url').value.trim();
+                const logo = document.getElementById('channel-logo').value.trim();
+                
+                if (!name || !url) {
+                    this.showToast('Please enter channel name and URL');
+                    return;
+                }
+                
+                if (!url.startsWith('http')) {
+                    this.showToast('Please enter a valid URL');
+                    return;
+                }
+                
+                this.addCustomChannel(name, url, logo);
+                this.hideAddChannelModal();
             }
             
             filterChannels(searchTerm) {
@@ -671,6 +878,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             iptvApp = new MobileIPTV();
         });
+
+        // Sample working PH channels (replace the example URLs with these):
+        // GMA 7: https://gma-streams.herokuapp.com/stream/gma.m3u8
+        // ABS-CBN: https://abs-cbn-live.herokuapp.com/stream/abscbn.m3u8
+        // TV5: https://tv5-stream.herokuapp.com/stream/tv5.m3u8
     </script>
 </body>
 </html>
