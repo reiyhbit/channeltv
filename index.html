@@ -76,39 +76,41 @@
             overflow: hidden;
         }
         
-        /* Channel info */
+        /* Channel info - mas compact */
         #channel-info {
-            padding: 15px;
+            padding: 10px 15px;
             background: #3c4043;
             border-bottom: 1px solid #444;
+            flex-shrink: 0;
         }
         
         #current-channel {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         #channel-status {
-            font-size: 14px;
+            font-size: 12px;
             color: #61dafb;
         }
         
-        /* Navigation buttons */
+        /* Navigation buttons - mas compact */
         #nav-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            padding: 15px;
+            gap: 8px;
+            padding: 10px;
+            flex-shrink: 0;
         }
         
         .nav-btn {
-            padding: 15px;
+            padding: 12px;
             background: #61dafb;
             color: #000;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -118,21 +120,42 @@
             transform: scale(0.95);
         }
         
-        /* Quick channels */
+        /* EPG button - mas compact */
+        #epg-btn {
+            padding: 10px;
+            margin: 8px 10px;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        #epg-btn:active {
+            background: #e55a2b;
+        }
+        
+        /* Quick channels - MAS COMPACT NA! */
         #quick-channels {
             flex: 1;
             overflow-y: auto;
-            padding: 10px;
+            padding: 5px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 columns para mas maraming channels */
+            gap: 5px;
+            max-height: 150px; /* Limit height */
         }
         
         .quick-channel {
             display: flex;
             align-items: center;
-            padding: 12px;
-            margin-bottom: 8px;
+            padding: 6px 8px;
             background: #3c4043;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
+            min-height: 35px; /* Mas mababa ang height */
         }
         
         .quick-channel:active {
@@ -145,16 +168,48 @@
         }
         
         .channel-logo {
-            width: 40px;
-            height: 40px;
-            margin-right: 12px;
-            border-radius: 6px;
+            width: 24px; /* Mas maliit na logo */
+            height: 24px;
+            margin-right: 8px;
+            border-radius: 4px;
             object-fit: cover;
+            flex-shrink: 0;
         }
         
         .channel-name {
-            font-size: 16px;
+            font-size: 12px; /* Mas maliit na font */
             flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* All Channels Button */
+        #channel-list-btn {
+            margin: 8px;
+            padding: 12px;
+            background: #61dafb;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        
+        #channel-list-btn:active {
+            background: #4fa3c4;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            text-align: center;
+            color: #888;
+            font-size: 11px;
+            padding: 5px;
+            background: #2d2d2d;
+            border-top: 1px solid #444;
         }
         
         /* Fullscreen mode */
@@ -191,7 +246,7 @@
         }
         
         #channel-header {
-            padding: 20px;
+            padding: 15px;
             background: #2d2d2d;
             display: flex;
             justify-content: space-between;
@@ -203,25 +258,25 @@
             background: #ff4444;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 14px;
         }
         
         #channels-list {
             flex: 1;
             overflow-y: auto;
-            padding: 15px;
+            padding: 10px;
         }
         
         .channel-item {
             display: flex;
             align-items: center;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 6px;
             background: #3c4043;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
         }
         
@@ -260,35 +315,19 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #61dafb;
-            font-size: 18px;
+            font-size: 16px;
         }
         
         /* Search bar */
         #channel-search {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 10px;
+            margin-bottom: 10px;
             background: #1a1a1a;
             border: 1px solid #444;
             border-radius: 8px;
             color: white;
-            font-size: 16px;
-        }
-        
-        /* EPG button */
-        #epg-btn {
-            padding: 12px;
-            margin: 10px 15px;
-            background: #ff6b35;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        
-        #epg-btn:active {
-            background: #e55a2b;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -320,25 +359,16 @@
             <!-- EPG Button -->
             <button id="epg-btn">📺 PROGRAM GUIDE</button>
             
-            <!-- Quick Channels List -->
+            <!-- Quick Channels List - MAS COMPACT NA! -->
             <div id="quick-channels">
-                <div style="text-align: center; padding: 20px; color: #888;">
-                    Tap "ALL CHANNELS" to browse
-                </div>
+                <!-- Channels will be loaded here -->
             </div>
             
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator">↓ Scroll for more channels ↓</div>
+            
             <!-- All Channels Button -->
-            <button id="channel-list-btn" style="
-                margin: 10px;
-                padding: 15px;
-                background: #61dafb;
-                color: #000;
-                border: none;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: bold;
-                cursor: pointer;
-            ">📋 ALL CHANNELS</button>
+            <button id="channel-list-btn">📋 ALL CHANNELS</button>
         </div>
     </div>
     
@@ -358,7 +388,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     
     <script>
-        // Mobile IPTV App with 50/50 layout
+        // Mobile IPTV App with COMPACT 50/50 layout
         class MobileIPTV {
             constructor() {
                 this.channels = [];
@@ -461,7 +491,7 @@
                     }
                     
                     channelItem.innerHTML = `
-                        <img src="${channel.tvgLogo}" alt="${channel.channelName}" class="channel-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjNjFkYWZiIi8+Cjx0ZXh0IHg9IjIwIiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+VFY8L3RleHQ+Cjwvc3ZnPgo='">
+                        <img src="${channel.tvgLogo}" alt="${channel.channelName}" class="channel-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFkYWZiIi8+Cjx0ZXh0IHg9IjEyIiB5PSIxMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+VFY8L3RleHQ+Cjwvc3ZnPgo='">
                         <span class="channel-name">${channel.channelName}</span>
                     `;
                     
@@ -478,8 +508,13 @@
                 const quickChannels = document.getElementById('quick-channels');
                 quickChannels.innerHTML = '';
                 
-                // Show first 8 channels as quick access
-                const quickAccessChannels = this.channels.slice(0, 8);
+                // Show first 12 channels as quick access (6 rows x 2 columns = 12 channels)
+                const quickAccessChannels = this.channels.slice(0, 12);
+                
+                if (quickAccessChannels.length === 0) {
+                    quickChannels.innerHTML = '<div style="grid-column: 1 / span 2; text-align: center; padding: 10px; color: #888; font-size: 12px;">No channels available</div>';
+                    return;
+                }
                 
                 quickAccessChannels.forEach((channel, index) => {
                     const quickChannel = document.createElement('div');
@@ -489,7 +524,7 @@
                     }
                     
                     quickChannel.innerHTML = `
-                        <img src="${channel.tvgLogo}" alt="${channel.channelName}" class="channel-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBmaWxsPSIjNjFkYWZiIi8+Cjx0ZXh0IHg9IjIwIiB5PSIyMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+VFY8L3RleHQ+Cjwvc3ZnPgo='">
+                        <img src="${channel.tvgLogo}" alt="${channel.channelName}" class="channel-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFkYWZiIi8+Cjx0ZXh0IHg9IjEyIiB5PSIxMiIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMDAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+VFY8L3RleHQ+Cjwvc3ZnPgo='">
                         <span class="channel-name">${channel.channelName}</span>
                     `;
                     
@@ -593,13 +628,6 @@
                 // Search
                 document.getElementById('channel-search').addEventListener('input', (e) => {
                     this.filterChannels(e.target.value);
-                });
-                
-                // Keyboard shortcuts for fullscreen
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'f' || e.key === 'F') {
-                        this.toggleFullscreen();
-                    }
                 });
             }
             
